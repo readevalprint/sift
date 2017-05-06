@@ -4,18 +4,18 @@ services:
         image: "postgres:9.5.2"
 
     core:
-        build: gather2-core
+        build: sift-core
         environment:
             RDS_HOSTNAME: "db"
             RDS_USERNAME: "postgres"
             RDS_PASSWORD: ""
             RDS_PORT: ""
-            RDS_DB_NAME: "gather2"
+            RDS_DB_NAME: "sift"
             STATIC_ROOT: "/var/www/static/"
         volumes:
-            - ./gather2-core:/code
+            - ./sift-core:/code
             - ./core_home:/root/
-        hostname: gathercore-app
+        hostname: siftcore-app
         ports:
             - "5000:5000"
             - "8000:8000"
@@ -23,7 +23,7 @@ services:
             - db
 
     odk-importer:
-        build: gather2-odk-importer
+        build: sift-odk-importer
         environment:
             RDS_HOSTNAME: "db"
             RDS_USERNAME: "postgres"
@@ -32,7 +32,7 @@ services:
             RDS_DB_NAME: "odk_importer"
             STATIC_ROOT: "/var/www/static/"
         volumes:
-            - ./gather2-odk-importer:/code
+            - ./sift-odk-importer:/code
             - ./importer_home:/root/
         ports:
             - "8443:8443"

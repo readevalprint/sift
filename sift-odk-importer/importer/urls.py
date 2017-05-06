@@ -1,4 +1,4 @@
-"""gather2_odk_importer URL Configuration
+"""sift_odk_importer URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.8/topics/http/urls/

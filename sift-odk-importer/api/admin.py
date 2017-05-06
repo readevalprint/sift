@@ -19,7 +19,7 @@ class XFormForm(forms.ModelForm):
     class Meta:
         model = XForm
         fields = ['id', 'username', 'description',
-                  'xml_data', 'xlsform', 'gather_core_url']
+                  'xml_data', 'xlsform', 'sift_core_url']
 
     def clean_xml_data(self):
         print('cleaning xform')

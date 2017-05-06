@@ -27,13 +27,13 @@ COPY ./ /code
 
 RUN python /tmp/awslogs-agent-setup.py -n -r ${AWS_REGION:-eu-west-1} -c /code/conf/awslogs.conf.dummy
 
-RUN mkdir -p /var/log/gathercore
+RUN mkdir -p /var/log/siftcore
 
 RUN mkdir -p /etc/supervisor/conf.d && mkdir -p /var/log/supervisor
-RUN ln -sf /code/gather2-core/conf/supervisor.gathercore.conf /etc/supervisor/conf.d/gc.conf
-RUN ln -sf /code/gather2-core/conf/supervisord.conf /etc/supervisor/supervisord.conf
+RUN ln -sf /code/sift-core/conf/supervisor.siftcore.conf /etc/supervisor/conf.d/gc.conf
+RUN ln -sf /code/sift-core/conf/supervisord.conf /etc/supervisor/supervisord.conf
 
-ADD conf/nginx.gathercore.conf /etc/nginx/sites-enabled/default
+ADD conf/nginx.siftcore.conf /etc/nginx/sites-enabled/default
 
 RUN mkdir -p /var/www/static && chmod -R 760 /var/www/static/ && chown -R www-data:www-data /var/www/static
 

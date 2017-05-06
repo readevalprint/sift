@@ -2,7 +2,7 @@
 
 > Survey collection and analytics
 
-[![Build Status](https://travis-ci.org/eHealthAfrica/gather2.svg?branch=master)](https://travis-ci.org/eHealthAfrica/gather2)
+[![Build Status](https://travis-ci.org/eHealthAfrica/sift.svg?branch=master)](https://travis-ci.org/eHealthAfrica/sift)
 
 ## Setup
 
@@ -14,8 +14,8 @@
 ### Installation
 
 ```
-$ git clone git@github.com:eHealthAfrica/gather2.git
-$ cd gather2
+$ git clone git@github.com:eHealthAfrica/sift.git
+$ cd sift
 
 $ docker-compose build
 $ docker-compose run core setuplocaldb
@@ -32,7 +32,7 @@ docker-compose run odk-importer manage createsuperuser
 
 ## Usage
 
-This will start the gather-core 0.0.0.0:8000 and the odk-importer on 0.0.0.0:8443
+This will start the sift-core 0.0.0.0:8000 and the odk-importer on 0.0.0.0:8443
 
 
 ```
@@ -55,6 +55,6 @@ When deploying set the env var `DJANGO_S3_FILE_STORAGE` to True. See `settings.p
 Infrastructure deployment is done with AWS CloudFormation, which configuration files are stored in [cloudformation](cloudformation) directory.
 
 Application deployment is managed by AWS Beanstalk and is being done automatically on the following branches/environments:
-- branch `master` is deployed to `dev` environment: [gather2-dev.ehealthafrica.org](https://gather2-dev.ehealthafrica.org)
+- branch `master` is deployed to `dev` environment: [sift-dev.ehealthafrica.org](https://sift-dev.ehealthafrica.org)
 
 All the logs are forwarded to CloudWatch Logs to be easily accessible for developers

@@ -3,7 +3,7 @@ from django.http import HttpResponse
 
 
 def authorise(username=None, password=None):
-    # TODO this is a stubbed method but eventually needs to call into gather
+    # TODO this is a stubbed method but eventually needs to call into sift
     # core
     return True
 

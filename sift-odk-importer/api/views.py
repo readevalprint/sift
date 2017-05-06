@@ -98,12 +98,12 @@ def submission(request):
             coerce_dict[re.findall(r'nodeset="([^"]*)"', n)
                         [0]] = re.findall(r'type="([^"]*)"', n)[0]
         walk(d, None, coerce_dict)  # modifies inplace
-        r = requests.post(xform.gather_core_url, json={'data': d})
+        r = requests.post(xform.sift_core_url, json={'data': d})
         if r.status_code != 201:
             return Response(status=r.status_code)
 
         attachment_url = r.json().get('attachments_url')
-        parse_result = urlparse(xform.gather_core_url)
+        parse_result = urlparse(xform.sift_core_url)
         for name, f in request.FILES.items():
             if name != 'xml_submission_file':
                 r = requests.post(attachment_url, data={'name': name}, files={'attachment_file': (f.name, f, f.content_type)}, auth=(parse_result.username, parse_result.password))

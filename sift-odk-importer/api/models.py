@@ -30,7 +30,7 @@ class XForm(models.Model):
     xml_data = models.TextField(blank=True, validators=[validate_xmldict])
     description = models.TextField(default=u'', null=True)
     created_at = models.DateTimeField(default=timezone.now)
-    gather_core_url = models.URLField(max_length=200, default='', blank=False)
+    sift_core_url = models.URLField(max_length=200, default='', blank=False)
 
     @property
     def hash(self):

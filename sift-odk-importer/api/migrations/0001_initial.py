@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
                 ('xml_data', models.TextField()),
                 ('description', models.TextField(default='', null=True)),
                 ('created_at', models.DateTimeField(default=django.utils.timezone.now)),
-                ('gather_core_url', models.URLField(default='')),
+                ('sift_core_url', models.URLField(default='')),
             ],
         ),
     ]
