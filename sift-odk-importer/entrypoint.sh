@@ -27,13 +27,30 @@ setup_prod_db() {
     set +e
     cd /code/
     set -e
+    export PGPASSWORD=$RDS_PASSWORD
+    if psql -h $RDS_HOSTNAME -U $RDS_USERNAME -c "" $RDS_DB_NAME; then
+      echo "Database exists!"
+    else
+      createdb -h $RDS_HOSTNAME -U $RDS_USERNAME -e $RDS_DB_NAME
+    fi
     /var/env/bin/python manage.py migrate
+}
+
+pip_freeze() {
+    virtualenv -p python3 /tmp/env/
+    /tmp/env/bin/pip install -r ./primary-requirements.txt --upgrade
+    set +x
+    echo -e "###\n# frozen requirements DO NOT CHANGE\n# To update this update 'primary-requirements.txt' then run ./entrypoint.sh pip_freeze\n###" | tee requirements.txt
+    /tmp/env/bin/pip freeze | tee -a requirements.txt
 }
 
 case "$1" in
     manage )
         cd /code/
         /var/env/bin/python manage.py "${@:2}"
+    ;;
+    pip_freeze )
+        pip_freeze
     ;;
     setuplocaldb )
         setup_local_db
@@ -59,9 +76,10 @@ EOF
     ;;
     start )
         cd /code/
+        setup_prod_db
         /var/env/bin/python manage.py collectstatic --noinput
-        /usr/local/bin/supervisord -c /etc/supervisor/supervisord.conf
-        nginx -g "daemon off;"
+        chmod -R 755 /var/www/static
+        /var/env/bin/uwsgi --ini /code/conf/uwsgi.ini
     ;;
     bash )
         bash "${@:2}"

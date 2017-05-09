@@ -18,7 +18,7 @@ class XFormForm(forms.ModelForm):
 
     class Meta:
         model = XForm
-        fields = ['id', 'username', 'description',
+        fields = ['id', 'description',
                   'xml_data', 'xlsform', 'sift_core_url']
 
     def clean_xml_data(self):
@@ -39,7 +39,6 @@ class XFormForm(forms.ModelForm):
 class XFormAdmin(admin.ModelAdmin):
     list_display = (
         'id',
-        'username',
         'title',
         'description',
         'created_at',

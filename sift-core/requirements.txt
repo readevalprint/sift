@@ -2,30 +2,48 @@
 # frozen requirements DO NOT CHANGE
 # To update this update 'primary-requirements.txt' then run ./entrypoint.sh pip_freeze
 ###
+<<<<<<< HEAD:sift-core/requirements.txt
 appdirs==1.4.3
+=======
+>>>>>>> 5e16c588153930a00518d212d81fde453ad6b94d:gather2-core/requirements.txt
 autopep8==1.2.1
 coverage==4.3.4
 decorator==4.0.11
 dj-database-url==0.3.0
 Django==1.10
 django-attachments==1.1.1
+<<<<<<< HEAD:sift-core/requirements.txt
 django-extensions==1.7.9
+=======
+django-cas-ng==3.5.7
+django-extensions==1.7.8
+>>>>>>> 5e16c588153930a00518d212d81fde453ad6b94d:gather2-core/requirements.txt
 django-filter==0.11.0
+django-reversion==2.0.8
+django-reversion-compare==0.7.4
 django-storages==1.5.2
-djangorestframework==3.5.3
+django-ums-client==0.2.3
+djangorestframework==3.6.2
 drf-extensions==0.3.1
 fake-factory==0.7.2
 flake8==2.4.0
+<<<<<<< HEAD:sift-core/requirements.txt
 hypothesis==3.8.2
 ipdb==0.8.1
 ipython==6.0.0
 ipython-genutils==0.2.0
 jedi==0.10.2
+=======
+hypothesis==3.7.0
+ipdb==0.8.1
+ipython==5.3.0
+ipython-genutils==0.2.0
+>>>>>>> 5e16c588153930a00518d212d81fde453ad6b94d:gather2-core/requirements.txt
 jsonschema==2.5.1
 Markdown==2.6.8
 mccabe==0.3.1
 packaging==16.8
-pep8==1.5.7
+pep8==1.7.0
 pexpect==4.2.1
 pickleshare==0.7.4
 prompt-toolkit==1.0.14
@@ -34,13 +52,21 @@ ptyprocess==0.5.1
 pyflakes==0.8.1
 Pygments==2.2.0
 pyparsing==2.2.0
+<<<<<<< HEAD:sift-core/requirements.txt
+=======
+python-cas==1.2.0
+>>>>>>> 5e16c588153930a00518d212d81fde453ad6b94d:gather2-core/requirements.txt
 python-dateutil==2.6.0
 pytz==2017.2
 requests==2.13.0
 simplegeneric==0.8.1
 six==1.10.0
 traitlets==4.3.2
+<<<<<<< HEAD:sift-core/requirements.txt
 typing==3.6.1
 uWSGI==2.0.15
+=======
+uWSGI==2.0.14
+>>>>>>> 5e16c588153930a00518d212d81fde453ad6b94d:gather2-core/requirements.txt
 wcwidth==0.1.7
 Werkzeug==0.11.2

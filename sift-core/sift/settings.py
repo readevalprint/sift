@@ -24,12 +24,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'reversion',
+    'reversion_compare',
     'rest_framework',
+    'rest_framework.authtoken',
     'django_extensions',
     'corsheaders',
     'storages',
     'core.apps.CoreConfig',
+    'django_cas_ng',
+    'ums_client',
 ]
+
+ADD_REVERSION_ADMIN = True
 
 MIDDLEWARE_CLASSES = [
     'corsheaders.middleware.CorsMiddleware',
@@ -65,7 +72,15 @@ WSGI_APPLICATION = 'sift.wsgi.application'
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',  # this is default
+    'ums_client.backends.UMSRoleBackend'
 )
+
+CAS_SERVER_URL = os.environ.get(
+    "CAS_SERVER_URL", "https://ums-dev.ehealthafrica.org")
+HOSTNAME = os.environ.get("HOSTNAME", "HOSTNAME")
+CAS_VERSION = 3
+CAS_LOGOUT_COMPLETELY = True
+
 
 ANONYMOUS_USER_ID = -1
 
@@ -83,6 +98,11 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.CursorPagination',
     'PAGE_SIZE': 30,
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    )
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -119,7 +139,6 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = os.environ.get("STATIC_ROOT", here('../static_root'))
 
-
 MEDIA_ROOT = here('../media_root')
 MEDIA_URL = '/media/'
 
@@ -150,6 +169,16 @@ DATABASES = {
 BROKER_URL = 'django://'
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+if os.environ.get('DJANGO_USE_X_FORWARDED_HOST', False):
+    USE_X_FORWARDED_HOST = True
+
+if os.environ.get('DJANGO_USE_X_FORWARDED_PORT', False):
+    USE_X_FORWARDED_PORT = True
+
+if os.environ.get('DJANGO_HTTP_X_FORWARDED_PROTO', False):
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 
 try:
     from local_settings import *  # noqa

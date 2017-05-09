@@ -1,7 +1,6 @@
 import re
 
-from urllib.parse import urlparse
-
+from django.conf import settings
 import requests
 from dateutil import parser
 from django.shortcuts import get_object_or_404
@@ -15,8 +14,14 @@ from rest_framework.decorators import (api_view, authentication_classes,
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import StaticHTMLRenderer, TemplateHTMLRenderer
 from rest_framework.response import Response
+from rest_framework import viewsets
 
+from .serializers import XFormSerializer
 from .models import XForm
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 
 def walk(obj, parent_keys, coerce_dict):
@@ -91,8 +96,8 @@ def submission(request):
     if request.method == 'POST':
         xml = request.FILES['xml_submission_file'].read()
         d = xmltodict.parse(xml)
-        title = list(d.items())[0][1]['@id']
-        xform = XForm.objects.filter(title=title).first()
+        form_id = list(d.items())[0][1]['@id']  # TODO make more robust
+        xform = get_object_or_404(XForm, id=form_id)
         coerce_dict = {}
         for n in re.findall(r"<bind.*/>", xform.xml_data):
             coerce_dict[re.findall(r'nodeset="([^"]*)"', n)
@@ -100,13 +105,19 @@ def submission(request):
         walk(d, None, coerce_dict)  # modifies inplace
         r = requests.post(xform.sift_core_url, json={'data': d})
         if r.status_code != 201:
+            logger.debug(r.content)
             return Response(status=r.status_code)
 
         attachment_url = r.json().get('attachments_url')
-        parse_result = urlparse(xform.sift_core_url)
         for name, f in request.FILES.items():
             if name != 'xml_submission_file':
-                r = requests.post(attachment_url, data={'name': name}, files={'attachment_file': (f.name, f, f.content_type)}, auth=(parse_result.username, parse_result.password))
-
+                r = requests.post(attachment_url, data={'name': name}, files={'attachment_file': (
+                    f.name, f, f.content_type)}, headers={'Authorization': 'Token {}'.format(settings.GATHER_CORE_TOKEN)})
         return Response(status=r.status_code)
     return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class XFormViewset(viewsets.ModelViewSet):
+    queryset = XForm.objects.all()
+    serializer_class = XFormSerializer
+    permission_classes = [IsAuthenticated]

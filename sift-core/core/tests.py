@@ -118,6 +118,7 @@ class SimpleTestCase(TestCase):
         self.crawl('http://testserver' + reverse('api-root'), seen=[], client=client)
 
         for s in Survey.objects.all():
+            assert isinstance(str(s), str)
             assert s.get_absolute_url()
 
     @given(SurveyResponseGoal)
@@ -226,7 +227,7 @@ class SimpleTestCase(TestCase):
         # Assert the reduce function only gets the first name
         response = client.get(
             reverse('reduce_function-detail', args=[reduce_function_id]))
-        self.assertEqual(response.json()['output'], ['tim'])
+        self.assertEqual(response.json()['output'], ['tim'], response.content)
 
         # Add new Response
         response = client.post(reverse('response-list'),
