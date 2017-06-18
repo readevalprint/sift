@@ -22,12 +22,4 @@ before_script:
 script:
   - docker-compose run core test_coverage
 
-after_success:
-  - git clone "https://${GH_USER}:${GH_TOKEN}@github.com/eHealthAfrica/beanstalk-deploy" .ebextensions
 
-deploy:
-  - provider: script
-    script: ./scripts/deploy.sh
-    skip_cleanup: true
-    on:
-      branch: master
