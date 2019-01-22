@@ -2,7 +2,7 @@
 
 > Survey collection and analytics
 
-[![Build Status](https://travis-ci.org/eHealthAfrica/sift.svg?branch=master)](https://travis-ci.org/eHealthAfrica/sift)
+[![Build Status](https://travis-ci.org/readevalprint/sift.svg?branch=master)](https://travis-ci.org/readevalprint/sift)
 
 ## Setup
 
