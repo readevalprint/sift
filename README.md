@@ -14,7 +14,7 @@
 ### Installation
 
 ```
-$ git clone git@github.com:eHealthAfrica/sift.git
+$ git clone git@github.com:readevalprint/sift.git
 $ cd sift
 
 $ docker-compose build
@@ -57,6 +57,5 @@ When deploying set the env var `DJANGO_S3_FILE_STORAGE` to True. See `settings.p
 Infrastructure deployment is done with AWS CloudFormation, which configuration files are stored in [cloudformation](cloudformation) directory.
 
 Application deployment is managed by AWS Beanstalk and is being done automatically on the following branches/environments:
-- branch `master` is deployed to `dev` environment: [sift-dev.ehealthafrica.org](https://sift-dev.ehealthafrica.org)
 
 All the logs are forwarded to CloudWatch Logs to be easily accessible for developers
