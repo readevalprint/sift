@@ -32,14 +32,20 @@ setup_prod_db() {
     /var/env/bin/python manage.py migrate
 }
 
+
 pip_freeze() {
     rm -rf /tmp/env
+    rm -rf /root/.cache/pip/
     virtualenv -p python3 /tmp/env/
+    rm -rf /code/dependencies/*
+    /tmp/env/bin/pip wheel -w /code/dependencies -r ./primary-requirements.txt
     /tmp/env/bin/pip install -f /code/dependencies -r ./primary-requirements.txt --upgrade
     set +x
     echo -e "###\n# frozen requirements DO NOT CHANGE\n# To update this update 'primary-requirements.txt' then run ./entrypoint.sh pip_freeze\n###" | tee requirements.txt
     /tmp/env/bin/pip freeze --local | grep -v appdir | tee -a requirements.txt
+
 }
+
 
 case "$1" in
     manage )

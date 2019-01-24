@@ -11,9 +11,10 @@ RUN wget -q https://www.postgresql.org/media/keys/ACCC4CF8.asc -O - |  apt-key a
 ADD conf/apt-packages.txt /code/conf/apt-packages.txt
 RUN apt-get update -qq && cat /code/conf/apt-packages.txt | xargs apt-get -qq --yes --force-yes install
 
-ADD requirements.txt /code/requirements.txt
 RUN pip3 install virtualenv pip --upgrade
 
+ADD requirements.txt /code/requirements.txt
+ADD dependencies /code/dependencies
 RUN virtualenv -p python3 /var/env/
 RUN /var/env/bin/pip install -r /code/requirements.txt
 
