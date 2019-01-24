@@ -1,7 +1,7 @@
 # Created by https://www.gitignore.io/api/python,ipythonnotebook,django,vim
 
 importer_home
-sift_home
+core_home
 static_root
 media_root
 

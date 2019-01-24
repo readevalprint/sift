@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 class Attachment(models.Model):
     attachment_file = models.FileField('attachment')
-    response = models.ForeignKey('Response', related_name='attachments')
+    response = models.ForeignKey('Response', related_name='attachments', on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     created = models.DateTimeField(auto_now_add=True, db_index=True)
 
@@ -24,7 +24,7 @@ class Survey(models.Model):
     # TODO: Make this readonly
     schema = JSONField(blank=False, null=False, default="{}")
     created = models.DateTimeField(auto_now_add=True, db_index=True)
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=True)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -35,21 +35,21 @@ class Survey(models.Model):
 
 
 class Response(models.Model):
-    survey = models.ForeignKey(Survey)
+    survey = models.ForeignKey(Survey, on_delete=models.CASCADE)
     data = JSONField(blank=False, null=False)
     created = models.DateTimeField(auto_now_add=True, db_index=True)
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=True)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, db_index=True, on_delete=models.CASCADE)
 
 
 class MapFunction(models.Model):
     code = models.TextField()
-    survey = models.ForeignKey(Survey)
+    survey = models.ForeignKey(Survey, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True, db_index=True)
 
 
 class MapResult(models.Model):
-    map_function = models.ForeignKey(MapFunction)
-    response = models.ForeignKey(Response)
+    map_function = models.ForeignKey(MapFunction, on_delete=models.CASCADE)
+    response = models.ForeignKey(Response, on_delete=models.CASCADE)
     output = JSONField(blank=True, null=False, default="{}", editable=False)
     error = models.TextField(editable=False)
     created = models.DateTimeField(auto_now_add=True, db_index=True)
@@ -59,7 +59,7 @@ class ReduceFunction(models.Model):
     code = models.TextField()
     output = JSONField(blank=False, null=False, default="{}", editable=False)
     error = models.TextField(blank=True, default="", editable=False)
-    map_function = models.ForeignKey(MapFunction)
+    map_function = models.ForeignKey(MapFunction, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True, db_index=True)
 
 

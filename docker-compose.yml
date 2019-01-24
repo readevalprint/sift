@@ -34,7 +34,7 @@ services:
             - ./sift-odk-importer:/code
             - ./importer_home:/root/
         ports:
-            - "8443:8443"
+            - "8843:8843"
         links:
             - core
             - db

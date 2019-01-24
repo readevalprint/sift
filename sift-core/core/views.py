@@ -33,7 +33,7 @@ class SurveyViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
             "required": ["firstName", "lastName"]
         }
     '''
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = [permissions.IsAuthenticated]
     queryset = Survey.objects.all()
     serializer_class = SurveySerializer
 

@@ -119,6 +119,11 @@ class SurveySerializer(serializers.ModelSerializer):
         read_only=True,
         default=serializers.CurrentUserDefault())
 
+    def save(self, **kwargs):
+        """Include default for read_only `user` field"""
+        kwargs["created_by"] = self.fields["created_by"].get_default()
+        return super().save(**kwargs)
+
     class Meta:
         model = Survey
         fields = ['id', 'url', 'schema', 'name', 'responses_url', 'map_functions_url', 'created_by']
@@ -136,6 +141,11 @@ class ResponseSerializer(serializers.ModelSerializer):
         default=serializers.CurrentUserDefault())
     attachments_url = serializers.HyperlinkedIdentityField(
         'response_attachment-list', read_only=True, lookup_url_kwarg='parent_lookup_response')
+
+    def save(self, **kwargs):
+        """Include default for read_only `user` field"""
+        kwargs["created_by"] = self.fields["created_by"].get_default()
+        return super().save(**kwargs)
 
     class Meta:
         model = Response

@@ -1,7 +1,7 @@
 from django.conf.urls import include, url
+from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-import django_cas_ng.views
 
 from django.contrib import admin
 
@@ -9,7 +9,7 @@ from core import views
 
 from .routers import TemplateRouter
 
-router = TemplateRouter(template_name='index.html')
+router = TemplateRouter(template_name='index.html',)
 
 (
     router.register('surveys', views.SurveyViewSet)
@@ -56,11 +56,8 @@ router.register('attachments', views.AttachmentViewSet, base_name='attachment')
 
 
 urlpatterns = [
-    url(r'^v1/', include(router.urls, namespace='v1')),
+    url(r'^v1/', include((router.urls, 'v1'), namespace='v1', )),
     url(r'', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls',
-                               namespace='rest_framework')),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^ums_login/$', django_cas_ng.views.login, name="cas_login"),
-    url(r'^ums_logout/$', django_cas_ng.views.logout, name="cas_logout"),
+    url(r'api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path(r'admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

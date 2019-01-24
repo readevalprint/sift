@@ -15,7 +15,7 @@ SECRET_KEY = 'n)&_bvxfe$g)gfa4b-uy&aqt$vx!w7jw%fyi9mc8#onh2^$m=='
 DEBUG = True
 
 # TODO make this an env var that defaults to []
-ALLOWED_HOSTS = ["sift*.elasticbeanstalk.com"]
+ALLOWED_HOSTS = ["sift*.elasticbeanstalk.com", ]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -32,20 +32,18 @@ INSTALLED_APPS = [
     'corsheaders',
     'storages',
     'core.apps.CoreConfig',
-    'django_cas_ng',
-    'ums_client',
 ]
 
 ADD_REVERSION_ADMIN = True
 
-MIDDLEWARE_CLASSES = [
-    'corsheaders.middleware.CorsMiddleware',
+MIDDLEWARE = [
+    #'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -72,7 +70,6 @@ WSGI_APPLICATION = 'sift.wsgi.application'
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',  # this is default
-    'ums_client.backends.UMSRoleBackend'
 )
 
 CAS_SERVER_URL = os.environ.get(
@@ -181,6 +178,6 @@ if os.environ.get('DJANGO_HTTP_X_FORWARDED_PROTO', False):
 
 
 try:
-    from local_settings import *  # noqa
+    from .local_settings import *  # noqa
 except ImportError as e:
     logger.error(e)
