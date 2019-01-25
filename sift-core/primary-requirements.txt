@@ -3,6 +3,7 @@ coverage
 Django
 django-attachments
 django-extensions
+django-debug-toolbar
 django-filter
 djangorestframework
 django-reversion-compare

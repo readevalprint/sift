@@ -12,7 +12,7 @@ def here(x):
 
 SECRET_KEY = 'n)&_bvxfe$g)gfa4b-uy&aqt$vx!w7jw%fyi9mc8#onh2^$m=='
 
-DEBUG = True
+DEBUG = False
 
 # TODO make this an env var that defaults to []
 ALLOWED_HOSTS = ["sift*.elasticbeanstalk.com", ]
@@ -32,6 +32,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'storages',
     'core.apps.CoreConfig',
+    'debug_toolbar',
+
 ]
 
 ADD_REVERSION_ADMIN = True
@@ -40,6 +42,7 @@ MIDDLEWARE = [
     #'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
