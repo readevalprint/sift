@@ -9,7 +9,7 @@
   "license": "Apache2",
   "dependencies": {
     "bootstrap": "~3.3.5",
-    "jquery": "~2.1.4",
+    "jquery": "~3.5.0",
     "underscore": "~1.8.3",
     "json-editor": "git+https://github.com/jdorn/json-editor.git"
   }
